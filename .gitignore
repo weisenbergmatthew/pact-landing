@@ -1,0 +1,11 @@
+# OS / editor
+.DS_Store
+Thumbs.db
+*.swp
+.idea/
+.vscode/
+.claude/
+
+# logs / deps (none needed for this static site, but just in case)
+node_modules/
+npm-debug.log*
