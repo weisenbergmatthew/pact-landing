@@ -13,6 +13,29 @@
 const WAITLIST_ENDPOINT = "https://script.google.com/macros/s/AKfycbxUzoKwO6ZfQF7Mi3uibzmXSHO-7WPPyoton2fedIy3qHG0brGGyRIcVXy12rVrXrzq/exec";
 
 (function () {
+  // Dynamic background: shift the ambient glow's hue as the page scrolls.
+  const root = document.documentElement;
+  let ticking = false;
+  function updateScroll() {
+    const max = document.body.scrollHeight - window.innerHeight || 1;
+    const progress = Math.min(1, Math.max(0, window.scrollY / max));
+    root.style.setProperty("--scroll", (progress * 55).toFixed(2));
+    ticking = false;
+  }
+  window.addEventListener(
+    "scroll",
+    function () {
+      if (!ticking) {
+        window.requestAnimationFrame(updateScroll);
+        ticking = true;
+      }
+    },
+    { passive: true }
+  );
+  updateScroll();
+})();
+
+(function () {
   // footer year
   const yearEl = document.getElementById("year");
   if (yearEl) yearEl.textContent = new Date().getFullYear();
