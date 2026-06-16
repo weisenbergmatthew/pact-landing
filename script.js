@@ -10,7 +10,7 @@
    the 5-minute walkthrough.
    ============================================================ */
 
-const WAITLIST_ENDPOINT = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
+const WAITLIST_ENDPOINT = "https://script.google.com/macros/s/AKfycbxUzoKwO6ZfQF7Mi3uibzmXSHO-7WPPyoton2fedIy3qHG0brGGyRIcVXy12rVrXrzq/exec";
 
 (function () {
   // footer year
