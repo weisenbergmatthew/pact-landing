@@ -67,7 +67,7 @@ const WAITLIST_ENDPOINT = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
       });
 
       form.reset();
-      setStatus("You're on the list! We'll be in touch soon. 🌱", "success");
+      setStatus("You're on the list. We'll be in touch.", "success");
       submitBtn.textContent = "Joined ✓";
     } catch (err) {
       console.error(err);
