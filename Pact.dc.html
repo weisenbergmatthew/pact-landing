@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Spectral:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+*{box-sizing:border-box;}
+body{margin:0;}
+@keyframes pop{0%{transform:scale(.5);opacity:0;}60%{transform:scale(1.1);}100%{transform:scale(1);opacity:1;}}
+@keyframes fadeUp{from{opacity:0;transform:translateY(16px);}to{opacity:1;transform:none;}}
+.pact-link{position:relative; cursor:pointer; transition:color .2s ease;}
+.pact-link:hover{color:var(--accent) !important;}
+.pact-cta{cursor:pointer; transition:transform .2s ease, box-shadow .2s ease;}
+.pact-cta:hover{transform:translateY(-2px); box-shadow:0 12px 24px -12px rgba(21,32,26,.45);}
+.pact-card{transition:transform .25s ease, box-shadow .25s ease, border-color .25s ease;}
+.pact-card:hover{transform:translateY(-3px); box-shadow:0 24px 44px -28px rgba(21,32,26,.4);}
+.src-ref{vertical-align:super; text-decoration:none; cursor:pointer; transition:opacity .15s ease;}
+.src-ref:hover{text-decoration:underline; opacity:.7;}
+[id^="src-"]:target{color:#A7CDB9 !important;}
+</style>
+</helmet>
+<div ref="{{ rootRef }}" style="--accent:#1F6B4A; --accent-dk:#184F38; --ink:#15201A; --cream:#F7F4ED; --cream2:#EEE9DD; --line:rgba(21,32,26,.13); background:var(--cream); font-family:'Hanken Grotesk',sans-serif; color:var(--ink); overflow-x:hidden;">
+
+  <!-- ===== NAV ===== -->
+  <div style="position:sticky; top:0; z-index:50; background:rgba(247,244,237,.86); backdrop-filter:blur(12px); border-bottom:1px solid var(--line);">
+    <div style="max-width:1180px; margin:0 auto; display:flex; align-items:center; justify-content:space-between; padding:18px 40px;">
+      <div style="font-family:'Spectral',serif; font-weight:700; font-size:23px; letter-spacing:-.01em;">Pact<span style="color:var(--accent);">.</span></div>
+      <div style="display:flex; align-items:center; gap:32px; font-size:14.5px; color:rgba(21,32,26,.66);">
+        <a href="#how" class="pact-link" style="color:inherit; text-decoration:none;">How it works</a><a href="#employers" class="pact-link" style="color:inherit; text-decoration:none;">For employers</a><a href="#different" class="pact-link" style="color:inherit; text-decoration:none;">Why it's different</a>
+      </div>
+      <a href="#waitlist" class="pact-cta" style="background:var(--accent); color:var(--cream); font-size:14px; font-weight:600; padding:11px 20px; border-radius:999px; text-decoration:none;">Join the waitlist</a>
+    </div>
+  </div>
+
+  <!-- ===== HERO ===== -->
+  <div style="max-width:1180px; margin:0 auto; display:grid; grid-template-columns:1fr 1fr; gap:56px; align-items:center; padding:84px 40px 88px;">
+    <div style="animation:fadeUp .7s ease both;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.16em; color:var(--accent); text-transform:uppercase; margin-bottom:24px;">Wellbeing spend that pays off</div>
+      <h1 style="font-family:'Spectral',serif; font-weight:600; font-size:62px; line-height:1.04; letter-spacing:-.015em; margin:0 0 24px;">The wellness benefit your people <span style="color:var(--accent); font-style:italic;">actually</span> use.</h1>
+      <p style="font-size:19px; line-height:1.55; color:rgba(21,32,26,.66); max-width:460px; margin:0 0 32px;">A weekly payout for hitting real health goals, verified automatically by the wearable your team already owns. Recurring rewards that genuinely change behavior — turning wellness spend into retention, productivity, and lower healthcare cost.</p>
+      <div style="display:flex; gap:14px; align-items:center;">
+        <a href="#waitlist" class="pact-cta" style="background:var(--accent); color:var(--cream); font-size:15px; font-weight:600; padding:15px 28px; border-radius:999px; text-decoration:none;">Join the waitlist</a>
+        <a href="#how" class="pact-cta" style="border:1px solid var(--line); color:var(--ink); font-size:15px; font-weight:600; padding:15px 26px; border-radius:999px; text-decoration:none;">How it works →</a>
+      </div>
+    </div>
+    <!-- interactive weekly loop widget -->
+    <div style="background:#fff; border:1px solid var(--line); border-radius:22px; padding:30px 32px; box-shadow:0 30px 56px -32px rgba(21,32,26,.45); animation:fadeUp .7s ease .12s both;">
+      <div style="display:flex; align-items:center; justify-content:space-between; margin-bottom:24px;">
+        <div>
+          <div style="font-family:'Spectral',serif; font-weight:600; font-size:20px;">This week</div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(21,32,26,.5); margin-top:4px;">GOAL · 10,000 STEPS × 4 DAYS</div>
+        </div>
+        <div style="display:flex; align-items:center; gap:7px; background:var(--cream2); padding:8px 13px; border-radius:999px; font-family:'JetBrains Mono',monospace; font-size:11px;"><span style="width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;"></span>Apple Watch</div>
+      </div>
+      <div style="display:grid; grid-template-columns:repeat(7,1fr); gap:8px; margin-bottom:24px;">
+        <sc-for list="{{ cells }}" as="cell" hint-placeholder-count="7">
+          <div style="{{ cell.boxStyle }}">
+            <span style="font-family:'Hanken Grotesk',sans-serif; font-weight:700; font-size:13px; line-height:1;">{{ cell.label }}</span>
+            <span style="font-family:'JetBrains Mono',monospace; font-size:9px; letter-spacing:.04em; opacity:.85;">{{ cell.statusText }}</span>
+          </div>
+        </sc-for>
+      </div>
+      <div style="display:flex; align-items:center; justify-content:space-between; padding-top:22px; border-top:1px solid var(--line);">
+        <div>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(21,32,26,.5); margin-bottom:5px;">PROGRESS</div>
+          <div style="font-size:17px; font-weight:700;">{{ hits }} / 4 days</div>
+        </div>
+        <sc-if value="{{ payoutVisible }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex; align-items:center; gap:11px; background:var(--accent); color:var(--cream); padding:13px 22px; border-radius:14px; animation:pop .4s ease;">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; opacity:.85;">PAYOUT</span>
+            <span style="font-family:'Spectral',serif; font-weight:700; font-size:28px;">+$25</span>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HOW IT WORKS ===== -->
+  <div id="how" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line); scroll-margin-top:66px;">
+    <div style="max-width:1180px; margin:0 auto; padding:80px 40px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.16em; color:var(--accent); text-transform:uppercase; margin-bottom:18px;">How it works</div>
+      <h2 style="font-family:'Spectral',serif; font-weight:600; font-size:44px; line-height:1.06; margin:0 0 16px; max-width:620px;">A simple weekly loop, built to last.</h2>
+      <p style="font-size:17px; line-height:1.55; color:rgba(21,32,26,.62); max-width:600px; margin:0 0 56px;">Each employee picks the goal and weekly target that fits their life. Hit it by the end of the week and the payout lands. Miss it — no penalty; it simply resets. The reward recurs every week, which is exactly what sustained behavior change requires.</p>
+      <div style="display:grid; grid-template-columns:repeat(3,1fr); gap:28px;">
+        <div class="pact-card" style="border:1px solid var(--line); border-radius:18px; padding:34px 30px;">
+          <div style="font-family:'Spectral',serif; font-size:30px; color:var(--accent); margin-bottom:18px;">01</div>
+          <h3 style="font-family:'Spectral',serif; font-weight:600; font-size:22px; margin:0 0 10px;">Connect a wearable</h3>
+          <p style="font-size:15px; line-height:1.5; color:rgba(21,32,26,.62); margin:0;">Employees link the device they already own. Pact reads only what's needed to confirm a goal was met.</p>
+        </div>
+        <div class="pact-card" style="border:1px solid var(--line); border-radius:18px; padding:34px 30px;">
+          <div style="font-family:'Spectral',serif; font-size:30px; color:var(--accent); margin-bottom:18px;">02</div>
+          <h3 style="font-family:'Spectral',serif; font-weight:600; font-size:22px; margin:0 0 10px;">Set a weekly goal</h3>
+          <p style="font-size:15px; line-height:1.5; color:rgba(21,32,26,.62); margin:0;">They pick the metric and target that fits their life, on a single weekly cadence everyone understands.</p>
+        </div>
+        <div class="pact-card" style="border:1px solid var(--line); border-radius:18px; padding:34px 30px;">
+          <div style="font-family:'Spectral',serif; font-size:30px; color:var(--accent); margin-bottom:18px;">03</div>
+          <h3 style="font-family:'Spectral',serif; font-weight:600; font-size:22px; margin:0 0 10px;">Hit it, get rewarded</h3>
+          <p style="font-size:15px; line-height:1.5; color:rgba(21,32,26,.62); margin:0;">Progress tracks automatically. Clear the goal by week's end and the payout lands — then it repeats.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== GOALS (interactive selector) ===== -->
+  <div style="background:var(--cream2);">
+    <div style="max-width:1180px; margin:0 auto; padding:80px 40px;">
+      <h2 style="font-family:'Spectral',serif; font-weight:600; font-size:38px; line-height:1.08; margin:0 0 10px;">Goals employees can choose from.</h2>
+      <p style="font-size:17px; line-height:1.55; color:rgba(21,32,26,.62); max-width:560px; margin:0 0 44px;">One definition of "healthy" doesn't fit everyone. Pact meets each person where they are.</p>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:40px; align-items:start;">
+        <!-- selectable list -->
+        <div style="display:flex; flex-direction:column; gap:12px;">
+          <sc-for list="{{ goals }}" as="goal" hint-placeholder-count="4">
+            <div onClick="{{ goal.onClick }}" style="{{ goal.rowStyle }}">
+              <div style="display:flex; align-items:center; justify-content:space-between;">
+                <span style="font-family:'Spectral',serif; font-weight:600; font-size:20px;">{{ goal.name }}</span>
+                <span style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.06em; opacity:.7;">{{ goal.metric }}</span>
+              </div>
+              <div style="font-size:14.5px; color:rgba(21,32,26,.6); margin-top:6px;">{{ goal.target }}</div>
+            </div>
+          </sc-for>
+        </div>
+        <!-- preview -->
+        <div style="background:var(--ink); border-radius:20px; padding:36px 38px; position:sticky; top:96px;">
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.14em; color:#8FBBA4; margin-bottom:20px;">SELECTED GOAL</div>
+          <h3 style="font-family:'Spectral',serif; font-weight:600; font-size:30px; color:var(--cream); margin:0 0 6px;">{{ sel.name }}</h3>
+          <div style="font-size:16px; color:#A7CDB9; margin-bottom:26px;">{{ sel.target }}</div>
+          <p style="font-size:15px; line-height:1.55; color:rgba(247,244,237,.66); margin:0 0 28px;">{{ sel.detail }}</p>
+          <div style="display:flex; align-items:center; justify-content:space-between; padding-top:22px; border-top:1px solid rgba(247,244,237,.16);">
+            <span style="font-family:'JetBrains Mono',monospace; font-size:11px; color:rgba(247,244,237,.55);">WEEKLY PAYOUT</span>
+            <span style="font-family:'Spectral',serif; font-weight:700; font-size:34px; color:var(--cream);">{{ sel.payout }}</span>
+          </div>
+        </div>
+      </div>
+      <div style="margin-top:40px; background:var(--cream); border:1px solid var(--line); border-radius:16px; padding:26px 30px; display:flex; align-items:center; gap:18px;">
+        <span style="font-family:'Spectral',serif; font-weight:700; font-size:17px; color:var(--accent); white-space:nowrap;">No wearable?</span>
+        <span style="font-size:15px; line-height:1.5; color:rgba(21,32,26,.66);">Not a blocker. Pact partners with leading device makers to offer employers discounted hardware for their teams — so cost never stands between an employee and getting started.</span>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOR EMPLOYERS — ROI band (dark) ===== -->
+  <div id="employers" style="background:var(--ink); scroll-margin-top:66px;">
+    <div style="max-width:1180px; margin:0 auto; padding:84px 40px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.16em; color:#8FBBA4; text-transform:uppercase; margin-bottom:18px;">For employers</div>
+      <h2 style="font-family:'Spectral',serif; font-weight:600; font-size:44px; line-height:1.06; color:var(--cream); margin:0 0 16px; max-width:780px;">Wellbeing spend comes back — and CFOs already believe it.</h2>
+      <p style="font-size:17px; line-height:1.55; color:rgba(247,244,237,.6); max-width:660px; margin:0 0 56px;">This isn't a new category. Employers already invest in wellness because the ROI holds up. Pact sharpens its most effective mechanic: a direct, recurring cash incentive — the lever most likely to convert that spend into sustained behavior change.</p>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr);">
+        <div style="padding:0 32px 0 0; border-right:1px solid rgba(247,244,237,.16);">
+          <div style="font-family:'Spectral',serif; font-size:58px; font-weight:600; color:var(--cream); line-height:1;">95<span style="font-size:30px;">%</span><a href="#src-1" class="src-ref" style="font-size:13px;color:#8FBBA4;font-family:'Hanken Grotesk';">1</a></div>
+          <p style="font-size:13.5px; line-height:1.45; color:rgba(247,244,237,.6); margin:16px 0 0;">of companies measuring ROI report a positive return on wellbeing</p>
+        </div>
+        <div style="padding:0 32px; border-right:1px solid rgba(247,244,237,.16);">
+          <div style="font-family:'Spectral',serif; font-size:58px; font-weight:600; color:var(--cream); line-height:1;">35<span style="font-size:30px;">%</span><a href="#src-2" class="src-ref" style="font-size:13px;color:#8FBBA4;font-family:'Hanken Grotesk';">2</a></div>
+          <p style="font-size:13.5px; line-height:1.45; color:rgba(247,244,237,.6); margin:16px 0 0;">reduction in healthcare costs for engaged employees over a year</p>
+        </div>
+        <div style="padding:0 32px; border-right:1px solid rgba(247,244,237,.16);">
+          <div style="font-family:'Spectral',serif; font-size:58px; font-weight:600; color:var(--cream); line-height:1;">30<span style="font-size:30px;">%</span><a href="#src-3" class="src-ref" style="font-size:13px;color:#8FBBA4;font-family:'Hanken Grotesk';">3</a></div>
+          <p style="font-size:13.5px; line-height:1.45; color:rgba(247,244,237,.6); margin:16px 0 0;">lower employee turnover at companies running wellbeing programs</p>
+        </div>
+        <div style="padding:0 0 0 32px;">
+          <div style="font-family:'Spectral',serif; font-size:58px; font-weight:600; color:var(--cream); line-height:1;">$1–3<a href="#src-4" class="src-ref" style="font-size:13px;color:#8FBBA4;font-family:'Hanken Grotesk';">4</a></div>
+          <p style="font-size:13.5px; line-height:1.45; color:rgba(247,244,237,.6); margin:16px 0 0;">saved in healthcare for every $1 spent on workplace wellness</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== BENEFITS ===== -->
+  <div style="max-width:1180px; margin:0 auto; padding:80px 40px;">
+    <h2 style="font-family:'Spectral',serif; font-weight:600; font-size:38px; line-height:1.08; margin:0 0 44px; max-width:560px;">The benefits of a healthier workforce.</h2>
+    <div class="pact-card" style="background:var(--accent); color:var(--cream); border-radius:18px; padding:40px 44px; display:flex; align-items:center; justify-content:space-between; gap:40px; margin-bottom:24px;">
+      <div>
+        <h3 style="font-family:'Spectral',serif; font-weight:600; font-size:36px; line-height:1.04; margin:0 0 10px;">Engagement is the product.</h3>
+        <p style="font-size:16.5px; line-height:1.5; color:rgba(247,244,237,.82); margin:0; max-width:680px;">The best outcomes come from people who participate. A recurring reward drives multiples of the engagement of access alone.</p>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px;">
+      <div class="pact-card" style="border:1px solid var(--line); border-radius:18px; padding:30px 28px;">
+        <div style="font-family:'Spectral',serif; font-size:46px; font-weight:600; color:var(--accent); line-height:1; margin-bottom:14px;">99<span style="font-size:24px;">%</span><a href="#src-1" class="src-ref" style="font-size:14px; color:var(--accent); font-family:'Hanken Grotesk';">1</a></div>
+        <h3 style="font-family:'Spectral',serif; font-weight:600; font-size:21px; margin:0 0 10px;">Higher productivity</h3>
+        <p style="font-size:14.5px; line-height:1.5; color:rgba(21,32,26,.62); margin:0;">of HR leaders say wellness programs lift productivity. Rested, active employees simply do better work.</p>
+      </div>
+      <div class="pact-card" style="border:1px solid var(--line); border-radius:18px; padding:30px 28px;">
+        <h3 style="font-family:'Spectral',serif; font-weight:600; font-size:21px; margin:0 0 10px;">Stronger retention</h3>
+        <p style="font-size:14.5px; line-height:1.5; color:rgba(21,32,26,.62); margin:0;">Younger workers stay where their wellbeing is visibly supported. A payout they feel every week is a benefit they remember.</p>
+      </div>
+      <div class="pact-card" style="border:1px solid var(--line); border-radius:18px; padding:30px 28px;">
+        <h3 style="font-family:'Spectral',serif; font-weight:600; font-size:21px; margin:0 0 10px;">Lower healthcare costs</h3>
+        <p style="font-size:14.5px; line-height:1.5; color:rgba(21,32,26,.62); margin:0;">Savings concentrate among employees who actually engage — and weekly cash is built to maximize exactly that.</p>
+      </div>
+      <div class="pact-card" style="border:1px solid var(--line); border-radius:18px; padding:30px 28px;">
+        <h3 style="font-family:'Spectral',serif; font-weight:600; font-size:21px; margin:0 0 10px;">A recruiting advantage</h3>
+        <p style="font-size:14.5px; line-height:1.5; color:rgba(21,32,26,.62); margin:0;">A weekly health payout is a benefit most candidates haven't seen — signalling a culture that genuinely invests in employee health, not just talks about it.</p>
+      </div>
+    </div>
+    <p style="font-size:13px; line-height:1.5; color:rgba(21,32,26,.45); margin:32px 0 0; max-width:760px;">Benchmarks drawn from published wellbeing-ROI research (incl. Wellhub's <em>Return on Wellbeing</em>), Forbes Health, McKinsey, and IDC. Figures vary by source and engagement level.</p>
+  </div>
+
+  <!-- ===== THE OPPORTUNITY (counters) ===== -->
+  <div ref="{{ oppRef }}" style="background:#fff; border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <div style="max-width:1180px; margin:0 auto; padding:80px 40px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.16em; color:var(--accent); text-transform:uppercase; margin-bottom:18px;">The opportunity</div>
+      <h2 style="font-family:'Spectral',serif; font-weight:600; font-size:42px; line-height:1.08; margin:0 0 16px; max-width:800px;">The data exists. The desire exists. The thing that moves behavior is missing.</h2>
+      <p style="font-size:17px; line-height:1.55; color:rgba(21,32,26,.62); max-width:660px; margin:0 0 52px;">People track their health like never before — but the numbers mostly just sit there. Wearables are excellent at collecting data and poor at changing what you actually do. Pact adds the one thing that reliably drives behavior: money, arriving on a schedule.</p>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:24px;">
+        <sc-for list="{{ stats3 }}" as="stat" hint-placeholder-count="4">
+          <div style="border:1px solid var(--line); border-radius:16px; padding:30px 28px;">
+            <div style="font-family:'Spectral',serif; font-weight:600; font-size:54px; line-height:1;">{{ stat.pre }}{{ stat.num }}{{ stat.suf }}<a href="#src-{{ stat.src }}" class="src-ref" style="font-size:14px; color:var(--accent); font-family:'Hanken Grotesk';">{{ stat.src }}</a></div>
+            <div style="height:5px; background:var(--accent); border-radius:99px; margin:20px 0 18px;"></div>
+            <p style="font-size:14px; line-height:1.45; color:rgba(21,32,26,.6); margin:0;">{{ stat.label }}</p>
+          </div>
+        </sc-for>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== WHY DIFFERENT ===== -->
+  <div id="different" style="background:var(--cream2); scroll-margin-top:66px;">
+    <div style="max-width:1180px; margin:0 auto; padding:80px 40px;">
+      <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.16em; color:var(--accent); text-transform:uppercase; margin-bottom:18px;">Why it's different</div>
+      <h2 style="font-family:'Spectral',serif; font-weight:600; font-size:42px; line-height:1.06; margin:0 0 52px; max-width:620px;">A neutral layer, built on employee trust.</h2>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:24px;">
+        <div style="background:#fff; border:1px solid var(--line); border-radius:18px; padding:38px 36px;">
+          <h3 style="font-family:'Spectral',serif; font-weight:600; font-size:24px; margin:0 0 14px;">Health data stays private</h3>
+          <p style="font-size:15.5px; line-height:1.55; color:rgba(21,32,26,.64); margin:0;">Employees don't want their employer holding raw health data — a rational concern Pact is built around. As a neutral third party, we confirm only whether a goal was met. The employer sees that a payout is owed, never someone's heart-rate history.</p>
+        </div>
+        <div style="background:#fff; border:1px solid var(--line); border-radius:18px; padding:38px 36px;">
+          <h3 style="font-family:'Spectral',serif; font-weight:600; font-size:24px; margin:0 0 14px;">Works with any wearable</h3>
+          <p style="font-size:15.5px; line-height:1.55; color:rgba(21,32,26,.64); margin:0 0 24px;">Everyone has a favorite device, and no one wants to switch. A single-brand program caps its own adoption. Pact is device-agnostic by design — the neutral layer that works no matter what's on the wrist. That neutrality is the moat.</p>
+          <div style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.1em; color:rgba(21,32,26,.45); margin-bottom:12px;">CONNECTS WITH</div>
+          <div style="display:flex; flex-wrap:wrap; gap:9px;">
+            <span style="border:1px solid var(--line); border-radius:999px; padding:7px 15px; font-size:13px; font-weight:600;">Apple Watch</span>
+            <span style="border:1px solid var(--line); border-radius:999px; padding:7px 15px; font-size:13px; font-weight:600;">Fitbit</span>
+            <span style="border:1px solid var(--line); border-radius:999px; padding:7px 15px; font-size:13px; font-weight:600;">Garmin</span>
+            <span style="border:1px solid var(--line); border-radius:999px; padding:7px 15px; font-size:13px; font-weight:600;">WHOOP</span>
+            <span style="border:1px solid var(--line); border-radius:999px; padding:7px 15px; font-size:13px; font-weight:600;">Oura</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== WAITLIST ===== -->
+  <div id="waitlist" style="background:var(--accent-dk); scroll-margin-top:66px;">
+    <div style="max-width:1180px; margin:0 auto; padding:84px 40px; display:grid; grid-template-columns:1fr 1fr; gap:64px; align-items:center;">
+      <div>
+        <div style="font-family:'JetBrains Mono',monospace; font-size:12px; letter-spacing:.16em; color:#A7CDB9; text-transform:uppercase; margin-bottom:18px;">Get early access</div>
+        <h2 style="font-family:'Spectral',serif; font-weight:600; font-size:46px; line-height:1.04; color:var(--cream); margin:0 0 18px;">Join the waitlist.</h2>
+        <p style="font-size:17px; line-height:1.55; color:rgba(247,244,237,.66); max-width:420px; margin:0;">We're onboarding a small group of forward-thinking teams first. Leave your details and we'll reach out as we open access.</p>
+      </div>
+      <div style="background:var(--cream); border-radius:20px; padding:34px 34px;">
+        <sc-if value="{{ submitted }}" hint-placeholder-val="{{ false }}">
+          <div style="text-align:center; padding:40px 10px;">
+            <div style="width:54px; height:54px; border-radius:50%; background:var(--accent); color:var(--cream); display:flex; align-items:center; justify-content:center; font-size:26px; margin:0 auto 20px;">✓</div>
+            <h3 style="font-family:'Spectral',serif; font-weight:600; font-size:24px; margin:0 0 8px;">You're on the list.</h3>
+            <p style="font-size:15px; color:rgba(21,32,26,.6); margin:0;">Thanks{{ nameGreeting }} — we'll be in touch as access opens.</p>
+          </div>
+        </sc-if>
+        <sc-if value="{{ notSubmitted }}" hint-placeholder-val="{{ true }}">
+          <div style="display:flex; flex-direction:column; gap:16px;">
+            <div>
+              <label style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.06em; color:rgba(21,32,26,.55); display:block; margin-bottom:7px;">NAME</label>
+              <input value="{{ name }}" onChange="{{ onName }}" placeholder="Jordan Lee" style="width:100%; border:1px solid var(--line); border-radius:11px; padding:13px 15px; font-size:15px; font-family:'Hanken Grotesk',sans-serif; background:#fff; outline:none;" />
+            </div>
+            <div>
+              <label style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.06em; color:rgba(21,32,26,.55); display:block; margin-bottom:7px;">WORK EMAIL</label>
+              <input value="{{ email }}" onChange="{{ onEmail }}" placeholder="jordan@company.com" style="width:100%; border:1px solid var(--line); border-radius:11px; padding:13px 15px; font-size:15px; font-family:'Hanken Grotesk',sans-serif; background:#fff; outline:none;" />
+            </div>
+            <div>
+              <label style="font-family:'JetBrains Mono',monospace; font-size:11px; letter-spacing:.06em; color:rgba(21,32,26,.55); display:block; margin-bottom:7px;">COMPANY</label>
+              <input value="{{ company }}" onChange="{{ onCompany }}" placeholder="Acme Inc." style="width:100%; border:1px solid var(--line); border-radius:11px; padding:13px 15px; font-size:15px; font-family:'Hanken Grotesk',sans-serif; background:#fff; outline:none;" />
+            </div>
+            <div onClick="{{ onSubmit }}" class="pact-cta" style="background:var(--accent); color:var(--cream); text-align:center; font-size:15px; font-weight:600; padding:15px; border-radius:11px; margin-top:4px;">Join the waitlist</div>
+            <p style="font-size:12.5px; color:rgba(21,32,26,.5); text-align:center; margin:2px 0 0;">We'll only use this to reach out about Pact. No spam.</p>
+          </div>
+        </sc-if>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== FOOTER ===== -->
+  <div style="background:var(--ink); color:rgba(247,244,237,.55);">
+    <div style="max-width:1180px; margin:0 auto; padding:56px 40px;">
+      <div style="display:flex; align-items:flex-end; justify-content:space-between; flex-wrap:wrap; gap:24px; padding-bottom:36px; border-bottom:1px solid rgba(247,244,237,.14);">
+        <div>
+          <div style="font-family:'Spectral',serif; font-weight:700; font-size:26px; color:var(--cream);">Pact<span style="color:var(--accent);">.</span></div>
+          <div style="font-size:15px; margin-top:6px;">Wellbeing spend that pays off.</div>
+        </div>
+        <a href="#waitlist" class="pact-cta" style="background:var(--accent); color:var(--cream); font-size:14px; font-weight:600; padding:12px 22px; border-radius:999px; text-decoration:none;">Join the waitlist</a>
+      </div>
+      <div style="display:grid; grid-template-columns:1fr 1fr; gap:8px 40px; padding:32px 0; font-size:11.5px; line-height:1.6; color:rgba(247,244,237,.42);">
+        <div id="src-1" style="scroll-margin-top:90px; transition:color .2s ease;">1. Wellhub, <em>Return on Wellbeing 2024</em> — 95% positive ROI; 99% report a productivity lift.</div>
+        <div id="src-2" style="scroll-margin-top:90px; transition:color .2s ease;">2. Wellhub, <em>Every Company a Wellness Company</em> — up to 35% lower healthcare costs.</div>
+        <div id="src-3" style="scroll-margin-top:90px; transition:color .2s ease;">3. Wellhub company reporting — ~30% reduction in employee turnover.</div>
+        <div id="src-4" style="scroll-margin-top:90px; transition:color .2s ease;">4. Workplace-wellness ROI analysis (via Wellhub) — roughly $1–$3 saved per $1 spent.</div>
+        <div id="src-5" style="scroll-margin-top:90px; transition:color .2s ease;">5. Forbes Health survey — 85% of Gen Z would pay to add healthy years to their life.</div>
+        <div id="src-6" style="scroll-margin-top:90px; transition:color .2s ease;">6. Endeavour Partners / Gartner — roughly half of tracker owners stop using the device.</div>
+        <div id="src-7" style="scroll-margin-top:90px; transition:color .2s ease;">7. MarketsandMarkets — projected ~$177B wearables market by 2030.</div>
+        <div id="src-8" style="scroll-margin-top:90px; transition:color .2s ease;">8. Mather, <em>Gen Xperience</em> 2026 — 61% of millennials would change jobs over unsupported wellbeing.</div>
+      </div>
+      <div style="font-size:12.5px; color:rgba(247,244,237,.4); padding-top:8px;">©  Pact. All rights reserved.</div>
+    </div>
+  </div>
+
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;accent&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#1F6B4A&quot;},&quot;accentDk&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#184F38&quot;},&quot;creamBg&quot;:{&quot;editor&quot;:&quot;color&quot;,&quot;default&quot;:&quot;#F7F4ED&quot;}}">
+class Component extends DCLogic {
+  constructor(props) {
+    super(props);
+    this.state = { loopDay: 0, oppProg: 0, goal: 0, name: '', email: '', company: '', submitted: false };
+    this.rootRef = React.createRef();
+    this.oppRef = React.createRef();
+  }
+  componentDidMount() {
+    const r = this.rootRef.current;
+    if (r) {
+      if (this.props.accent) r.style.setProperty('--accent', this.props.accent);
+      if (this.props.accentDk) r.style.setProperty('--accent-dk', this.props.accentDk);
+      if (this.props.creamBg) r.style.setProperty('--cream', this.props.creamBg);
+    }
+    this._iv = setInterval(() => this.setState(s => ({ loopDay: (s.loopDay + 1) % 9 })), 680);
+    const startCounter = () => {
+      if (this._countStarted) return;
+      this._countStarted = true;
+      const start = performance.now(), dur = 1700;
+      const tick = (t) => {
+        let p = Math.min(1, (t - start) / dur);
+        p = 1 - Math.pow(1 - p, 3);
+        this.setState({ oppProg: p });
+        if (p < 1) this._raf = requestAnimationFrame(tick);
+      };
+      this._raf = requestAnimationFrame(tick);
+    };
+    const el = this.oppRef.current;
+    if (el && 'IntersectionObserver' in window) {
+      this._io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { startCounter(); if (this._io) this._io.disconnect(); } });
+      }, { threshold: 0, rootMargin: '0px 0px -15% 0px' });
+      this._io.observe(el);
+    } else {
+      startCounter();
+    }
+    // Safety net: if the observer never fires (short/scaled preview viewport), animate anyway.
+    this._fallback = setTimeout(startCounter, 2200);
+  }
+  componentWillUnmount() {
+    clearInterval(this._iv);
+    cancelAnimationFrame(this._raf);
+    if (this._io) this._io.disconnect();
+    clearTimeout(this._fallback);
+  }
+  renderVals() {
+    // weekly loop
+    const days = ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'];
+    const ld = Math.min(this.state.loopDay, 7);
+    const hitDays = [0, 1, 3, 4];
+    const base = { display: 'flex', flexDirection: 'column', alignItems: 'center', justifyContent: 'center', gap: '6px', height: '78px', borderRadius: '12px', transition: 'all .35s ease' };
+    const cells = days.map((d, i) => {
+      const revealed = i < ld, isToday = i === ld, isHit = revealed && hitDays.includes(i);
+      let boxStyle, statusText;
+      if (isHit) { boxStyle = { ...base, background: 'var(--accent)', color: 'var(--cream)', border: '1px solid var(--accent)' }; statusText = 'HIT'; }
+      else if (revealed) { boxStyle = { ...base, background: 'var(--cream2)', color: 'rgba(21,32,26,.45)', border: '1px solid var(--line)' }; statusText = '—'; }
+      else if (isToday) { boxStyle = { ...base, background: 'rgba(31,107,74,.07)', color: 'var(--accent)', border: '1.5px solid var(--accent)', boxShadow: '0 0 0 4px rgba(31,107,74,.1)' }; statusText = 'NOW'; }
+      else { boxStyle = { ...base, background: '#fff', color: 'rgba(21,32,26,.32)', border: '1px solid var(--line)' }; statusText = '·'; }
+      return { label: d, boxStyle, statusText };
+    });
+    const hits = hitDays.filter(i => i < ld).length;
+    const payoutVisible = hits >= 4;
+
+    // goals selector
+    const goalsData = [
+      { name: 'Daily steps', metric: 'STEPS', target: '10,000+ steps · 4 days a week', detail: 'Pact reads your daily step count and confirms the threshold was cleared on four separate days. No manual logging.', payout: '+$25' },
+      { name: 'Cardio', metric: 'ZONE 2+', target: '60 minutes in Zone 2+ heart rate', detail: 'Time spent in elevated heart-rate zones is summed across the week — walking, cycling, a run, it all counts.', payout: '+$25' },
+      { name: 'Workouts', metric: 'SESSIONS', target: '3 workouts logged', detail: 'Counts training sessions of twenty minutes or more, whatever the activity. Consistency over intensity.', payout: '+$25' },
+      { name: 'Sleep consistency', metric: 'SLEEP', target: '75%+ sleep consistency score', detail: 'Rewards steady sleep and wake times across the week — the habit most linked to recovery and mood.', payout: '+$25' },
+    ];
+    const selIdx = this.state.goal;
+    const rowBase = { borderRadius: '14px', padding: '20px 22px', cursor: 'pointer', transition: 'all .2s ease' };
+    const goals = goalsData.map((g, i) => ({
+      ...g,
+      rowStyle: i === selIdx
+        ? { ...rowBase, background: 'var(--cream)', border: '1.5px solid var(--accent)', boxShadow: '0 8px 20px -14px rgba(21,32,26,.4)' }
+        : { ...rowBase, background: 'transparent', border: '1px solid var(--line)' },
+      onClick: () => this.setState({ goal: i }),
+    }));
+    const sel = goalsData[selIdx];
+
+    // opportunity counters
+    const p = this.state.oppProg;
+    const barBase = { height: '100%', borderRadius: '99px', background: 'var(--accent)', transformOrigin: 'left' };
+    const stats3 = [
+      { pre: '', num: Math.round(85 * p), suf: '%', src: '5', pct: 85, label: 'of Gen Z would pay to add healthy years to their life — the highest of any generation' },
+      { pre: '~', num: Math.round(50 * p), suf: '%', src: '6', pct: 50, label: 'of fitness-tracker buyers stop using the device — the gap is motivation, not data' },
+      { pre: '$', num: Math.round(177 * p), suf: 'B', src: '7', pct: 90, label: 'projected wearables market by 2030 — the hardware is already on wrists' },
+      { pre: '', num: Math.round(61 * p), suf: '%', src: '8', pct: 61, label: 'of millennials would change jobs if wellbeing goes unsupported at work' },
+    ].map(s => ({ ...s, barStyle: { ...barBase, width: (s.pct * p) + '%' } }));
+
+    // waitlist form
+    const onName = (e) => this.setState({ name: e.target.value });
+    const onEmail = (e) => this.setState({ email: e.target.value });
+    const onCompany = (e) => this.setState({ company: e.target.value });
+    const onSubmit = () => { if (this.state.email.trim()) this.setState({ submitted: true }); };
+    const firstName = (this.state.name || '').trim().split(' ')[0];
+
+    return {
+      rootRef: this.rootRef, oppRef: this.oppRef,
+      cells, hits, payoutVisible,
+      goals, sel,
+      stats3,
+      name: this.state.name, email: this.state.email, company: this.state.company,
+      onName, onEmail, onCompany, onSubmit,
+      submitted: this.state.submitted, notSubmitted: !this.state.submitted,
+      nameGreeting: firstName ? ', ' + firstName : '',
+    };
+  }
+}
+</script>
+</body>
+</html>
